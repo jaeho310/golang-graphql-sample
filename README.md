@@ -1,4 +1,4 @@
-# golang-graphql sample
+# golang-graphql-sample
 
 ### description
 golang graphql sample with gqlgen
