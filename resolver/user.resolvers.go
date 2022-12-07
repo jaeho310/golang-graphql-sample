@@ -18,7 +18,10 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input types.CreateUse
 
 // UserList is the resolver for the user_list field.
 func (r *queryResolver) UserList(ctx context.Context) (*types.UserList, error) {
-	panic(fmt.Errorf("not implemented: UserList - user_list"))
+	var list []*types.User
+	list = append(list, &types.User{ID: "1", Name: "Tom"})
+	list = append(list, &types.User{ID: "2", Name: "John"})
+	return &types.UserList{List: list}, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
