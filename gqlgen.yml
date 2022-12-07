@@ -6,8 +6,8 @@ exec:
   package: generated
 
 model:
-  filename: resolver/gql-types/types.go
-  package: gql_types
+  filename: resolver/types/types.go
+  package: types
 
 resolver:
   layout: follow-schema

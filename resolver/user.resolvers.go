@@ -8,16 +8,16 @@ import (
 	"context"
 	"fmt"
 	"graphql-sample/generated"
-	gql_types1 "graphql-sample/resolver/gql-types"
+	"graphql-sample/resolver/types"
 )
 
 // CreateUser is the resolver for the create_user field.
-func (r *mutationResolver) CreateUser(ctx context.Context, input gql_types1.CreateUserInput) (*gql_types1.User, error) {
+func (r *mutationResolver) CreateUser(ctx context.Context, input types.CreateUserInput) (*types.User, error) {
 	panic(fmt.Errorf("not implemented: CreateUser - create_user"))
 }
 
 // UserList is the resolver for the user_list field.
-func (r *queryResolver) UserList(ctx context.Context) (*gql_types1.UserList, error) {
+func (r *queryResolver) UserList(ctx context.Context) (*types.UserList, error) {
 	panic(fmt.Errorf("not implemented: UserList - user_list"))
 }
 

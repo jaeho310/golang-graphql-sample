@@ -7,7 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	gql_types "graphql-sample/resolver/gql-types"
+	"graphql-sample/resolver/types"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -45,7 +45,7 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Mutation struct {
-		CreateUser func(childComplexity int, input gql_types.CreateUserInput) int
+		CreateUser func(childComplexity int, input types.CreateUserInput) int
 	}
 
 	Query struct {
@@ -63,10 +63,10 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreateUser(ctx context.Context, input gql_types.CreateUserInput) (*gql_types.User, error)
+	CreateUser(ctx context.Context, input types.CreateUserInput) (*types.User, error)
 }
 type QueryResolver interface {
-	UserList(ctx context.Context) (*gql_types.UserList, error)
+	UserList(ctx context.Context) (*types.UserList, error)
 }
 
 type executableSchema struct {
@@ -94,7 +94,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateUser(childComplexity, args["input"].(gql_types.CreateUserInput)), true
+		return e.complexity.Mutation.CreateUser(childComplexity, args["input"].(types.CreateUserInput)), true
 
 	case "Query.user_list":
 		if e.complexity.Query.UserList == nil {
@@ -224,10 +224,10 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 func (ec *executionContext) field_Mutation_create_user_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 gql_types.CreateUserInput
+	var arg0 types.CreateUserInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNCreateUserInput2graphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐCreateUserInput(ctx, tmp)
+		arg0, err = ec.unmarshalNCreateUserInput2graphqlᚑsampleᚋresolverᚋtypesᚐCreateUserInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -303,7 +303,7 @@ func (ec *executionContext) _Mutation_create_user(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateUser(rctx, fc.Args["input"].(gql_types.CreateUserInput))
+		return ec.resolvers.Mutation().CreateUser(rctx, fc.Args["input"].(types.CreateUserInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -315,9 +315,9 @@ func (ec *executionContext) _Mutation_create_user(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*gql_types.User)
+	res := resTmp.(*types.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_create_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -376,9 +376,9 @@ func (ec *executionContext) _Query_user_list(ctx context.Context, field graphql.
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*gql_types.UserList)
+	res := resTmp.(*types.UserList)
 	fc.Result = res
-	return ec.marshalNUserList2ᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUserList(ctx, field.Selections, res)
+	return ec.marshalNUserList2ᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUserList(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_user_list(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -527,7 +527,7 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _User_id(ctx context.Context, field graphql.CollectedField, obj *gql_types.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_id(ctx context.Context, field graphql.CollectedField, obj *types.User) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_User_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -571,7 +571,7 @@ func (ec *executionContext) fieldContext_User_id(ctx context.Context, field grap
 	return fc, nil
 }
 
-func (ec *executionContext) _User_name(ctx context.Context, field graphql.CollectedField, obj *gql_types.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_name(ctx context.Context, field graphql.CollectedField, obj *types.User) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_User_name(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -615,7 +615,7 @@ func (ec *executionContext) fieldContext_User_name(ctx context.Context, field gr
 	return fc, nil
 }
 
-func (ec *executionContext) _UserList_list(ctx context.Context, field graphql.CollectedField, obj *gql_types.UserList) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserList_list(ctx context.Context, field graphql.CollectedField, obj *types.UserList) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserList_list(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -641,9 +641,9 @@ func (ec *executionContext) _UserList_list(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*gql_types.User)
+	res := resTmp.([]*types.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserList_list(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2438,8 +2438,8 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(ctx context.Conte
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputCreateUserInput(ctx context.Context, obj interface{}) (gql_types.CreateUserInput, error) {
-	var it gql_types.CreateUserInput
+func (ec *executionContext) unmarshalInputCreateUserInput(ctx context.Context, obj interface{}) (types.CreateUserInput, error) {
+	var it types.CreateUserInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -2580,7 +2580,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 
 var userImplementors = []string{"User"}
 
-func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj *gql_types.User) graphql.Marshaler {
+func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj *types.User) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, userImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
@@ -2615,7 +2615,7 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 
 var userListImplementors = []string{"UserList"}
 
-func (ec *executionContext) _UserList(ctx context.Context, sel ast.SelectionSet, obj *gql_types.UserList) graphql.Marshaler {
+func (ec *executionContext) _UserList(ctx context.Context, sel ast.SelectionSet, obj *types.UserList) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, userListImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
@@ -2974,7 +2974,7 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNCreateUserInput2graphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐCreateUserInput(ctx context.Context, v interface{}) (gql_types.CreateUserInput, error) {
+func (ec *executionContext) unmarshalNCreateUserInput2graphqlᚑsampleᚋresolverᚋtypesᚐCreateUserInput(ctx context.Context, v interface{}) (types.CreateUserInput, error) {
 	res, err := ec.unmarshalInputCreateUserInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -3009,11 +3009,11 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNUser2graphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUser(ctx context.Context, sel ast.SelectionSet, v gql_types.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2graphqlᚑsampleᚋresolverᚋtypesᚐUser(ctx context.Context, sel ast.SelectionSet, v types.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚕᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*gql_types.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚕᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*types.User) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3037,7 +3037,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖgraphqlᚑsampleᚋresolverᚋgql
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUser(ctx, sel, v[i])
+			ret[i] = ec.marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUser(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3057,7 +3057,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖgraphqlᚑsampleᚋresolverᚋgql
 	return ret
 }
 
-func (ec *executionContext) marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUser(ctx context.Context, sel ast.SelectionSet, v *gql_types.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUser(ctx context.Context, sel ast.SelectionSet, v *types.User) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3067,11 +3067,11 @@ func (ec *executionContext) marshalNUser2ᚖgraphqlᚑsampleᚋresolverᚋgqlᚑ
 	return ec._User(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNUserList2graphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUserList(ctx context.Context, sel ast.SelectionSet, v gql_types.UserList) graphql.Marshaler {
+func (ec *executionContext) marshalNUserList2graphqlᚑsampleᚋresolverᚋtypesᚐUserList(ctx context.Context, sel ast.SelectionSet, v types.UserList) graphql.Marshaler {
 	return ec._UserList(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUserList2ᚖgraphqlᚑsampleᚋresolverᚋgqlᚑtypesᚐUserList(ctx context.Context, sel ast.SelectionSet, v *gql_types.UserList) graphql.Marshaler {
+func (ec *executionContext) marshalNUserList2ᚖgraphqlᚑsampleᚋresolverᚋtypesᚐUserList(ctx context.Context, sel ast.SelectionSet, v *types.UserList) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
