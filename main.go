@@ -2,6 +2,7 @@ package main
 
 import (
 	"graphql-sample/generated"
+	"graphql-sample/model"
 	"graphql-sample/resolver"
 	"log"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 )
 
 func main() {
+	model.InitDatabase()
 	port := "8080"
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(
 		generated.Config{Resolvers: &resolver.Resolver{}}))
