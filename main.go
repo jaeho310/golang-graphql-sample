@@ -2,8 +2,8 @@ package main
 
 import (
 	"graphql-sample/generated"
-	"graphql-sample/model"
 	"graphql-sample/resolver"
+	"graphql-sample/store"
 	"log"
 	"net/http"
 
@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	model.InitDatabase()
-	port := "8080"
+	store.InitDatabase()
+	port := "8395"
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(
 		generated.Config{Resolvers: &resolver.Resolver{}}))
 	http.Handle("/", playground.Handler("Graphql playground", "/api/graphql"))

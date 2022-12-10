@@ -6,22 +6,46 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 	"graphql-sample/generated"
 	"graphql-sample/resolver/types"
+	"graphql-sample/service"
+	"strconv"
 )
 
 // CreateUser is the resolver for the create_user field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input types.CreateUserInput) (*types.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - create_user"))
+	user, err := service.UserService{}.CreateUser(input)
+	if err != nil {
+		return nil, err
+	}
+	return user.GetGqlResponse(), nil
 }
 
 // UserList is the resolver for the user_list field.
 func (r *queryResolver) UserList(ctx context.Context) (*types.UserList, error) {
+	userList, err := service.UserService{}.GetUserList()
+	if err != nil {
+		return nil, err
+	}
 	var list []*types.User
-	list = append(list, &types.User{ID: "1", Name: "Tom"})
-	list = append(list, &types.User{ID: "2", Name: "John"})
+	for _, user := range userList {
+		list = append(list, user.GetGqlResponse())
+	}
 	return &types.UserList{List: list}, nil
+}
+
+// User is the resolver for the user field.
+func (r *queryResolver) User(ctx context.Context, input types.UserInput) (*types.User, error) {
+	userId, err := strconv.Atoi(input.ID)
+	if err != nil {
+		return nil, err
+	}
+	user, err := service.UserService{}.GetUser(userId)
+	if err != nil {
+		return nil, err
+	}
+	// gorm model과 types.user는 필드와 타입이 다르니 변환하는 메서드를 하나 구축합니다.
+	return user.GetGqlResponse(), nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

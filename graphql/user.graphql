@@ -11,8 +11,13 @@ input CreateUserInput {
   name: String!
 }
 
+input UserInput {
+  id: ID!
+}
+
 type Query {
   user_list: UserList!
+  user(input: UserInput!): User!
 }
 
 type Mutation {
