@@ -20,4 +20,5 @@ func main() {
 	http.Handle("/api/graphql", srv)
 	log.Printf("http://localhost:%s for Graphql platground \n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
+
 }
