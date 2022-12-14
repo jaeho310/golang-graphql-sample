@@ -1,0 +1,29 @@
+type Watch {
+    id: ID!
+    name: String!
+    price: Int!
+    time: String!
+    User: User!
+}
+
+type WatchList {
+    list: [Watch!]!
+}
+
+input CreateWatchInput {
+    name: String!
+    price: Int!
+    user_id: Int!
+}
+
+extend type Query {
+    watch_list: WatchList
+}
+
+extend type Mutation {
+    create_watch(input: CreateWatchInput!): Watch!
+}
+
+type Subscription {
+    watch: Watch
+}

@@ -6,9 +6,16 @@ type CreateUserInput struct {
 	Name string `json:"name"`
 }
 
+type CreateWatchInput struct {
+	Name   string `json:"name"`
+	Price  int    `json:"price"`
+	UserID int    `json:"user_id"`
+}
+
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID        string   `json:"id"`
+	Name      string   `json:"name"`
+	WatchList []*Watch `json:"watch_list"`
 }
 
 type UserInput struct {
@@ -17,4 +24,16 @@ type UserInput struct {
 
 type UserList struct {
 	List []*User `json:"list"`
+}
+
+type Watch struct {
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Price int    `json:"price"`
+	Time  string `json:"time"`
+	User  *User  `json:"User"`
+}
+
+type WatchList struct {
+	List []*Watch `json:"list"`
 }

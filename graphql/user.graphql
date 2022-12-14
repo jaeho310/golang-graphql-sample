@@ -1,6 +1,7 @@
 type User {
   id: ID!
   name: String!
+  watch_list: [Watch!]!
 }
 
 type UserList {
