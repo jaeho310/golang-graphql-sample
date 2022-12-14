@@ -10,7 +10,7 @@ type UserRepository struct{}
 
 func (UserRepository) FindAll() ([]model.User, error) {
 	var userList []model.User
-	err := store.DB.Find(&userList).Error // Find의 두번째 파라미터로 id list를 입력하지 않으면 모든 record 조회
+	err := store.DB.Find(&userList).Error // Find의 두번째 파라미터로 id list를 넘겨주지 않으면 모든 record 조회
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func (UserRepository) FindById(id int) (*model.User, error) {
 }
 
 func (UserRepository) CreateUser(input types.CreateUserInput) (*model.User, error) {
-	user := model.User{}.NewGormUser(input)
+	user := model.NewGormUser(input)
 	err := store.DB.Save(user).Error
 	if err != nil {
 		return nil, err

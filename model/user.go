@@ -23,7 +23,7 @@ func (user *User) GetGqlResponse() *types.User {
 	}
 }
 
-func (User) NewGormUser(input types.CreateUserInput) *User {
+func NewGormUser(input types.CreateUserInput) *User {
 	return &User{
 		Name: input.Name,
 	}
